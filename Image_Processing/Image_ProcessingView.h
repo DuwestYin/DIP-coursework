@@ -86,6 +86,10 @@ public:
 	afx_msg void On32816();
 	afx_msg void On32817();
 	afx_msg void On32818();
+	afx_msg void On32820();
+	afx_msg void On32821();
+	afx_msg void On32822();
+	afx_msg void On32823();
 };
 
 #ifndef _DEBUG  // Image_ProcessingView.cpp 中的调试版本

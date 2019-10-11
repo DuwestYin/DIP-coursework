@@ -72,6 +72,10 @@ ON_COMMAND(ID_32814, &CImage_ProcessingView::On32814)
 ON_COMMAND(ID_32816, &CImage_ProcessingView::On32816)
 ON_COMMAND(ID_32817, &CImage_ProcessingView::On32817)
 ON_COMMAND(ID_32818, &CImage_ProcessingView::On32818)
+ON_COMMAND(ID_32820, &CImage_ProcessingView::On32820)
+ON_COMMAND(ID_32821, &CImage_ProcessingView::On32821)
+ON_COMMAND(ID_32822, &CImage_ProcessingView::On32822)
+ON_COMMAND(ID_32823, &CImage_ProcessingView::On32823)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -656,18 +660,174 @@ void CImage_ProcessingView::On32805()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
+//第二次作业
+//显示直方图
+vector<double> Pz(256, 0);
+void CImage_ProcessingView::On32814()
+{
+	if (m_Image.IsNull()) return;    //判断图像是否为空
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<int>> img(h, vector<int>(w, 0));
+	vector<vector<int>> hstgm(h, vector<int>(w, 0));
+
+	for (int i = 0; i < h; ++i)      //转换为灰度图
+		for (int j = 0; j < w; ++j)
+			img[i][j] = m_Image.m_pBits[2][i][j] * 0.299 + m_Image.m_pBits[1][i][j] * 0.587 + m_Image.m_pBits[0][i][j] * 0.114;
+
+	Pz = histogram_display(img, hstgm);    //显示直方图
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//直方图均衡化
+vector<vector<int>> img_jun, img_jun_2;          //全局变量，存储原图像，均衡化后的图像
+
+//显示原图像直方图
+void CImage_ProcessingView::On32816()
+{
+	if (m_Image.IsNull()) return;    //判断图像是否为空
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	img_jun.resize(h);
+	for (auto& c : img_jun)
+		c.resize(w);
+	vector<vector<int>> hstgm(h, vector<int>(w, 0));
+
+	for (int i = 0; i < h; ++i)      //转换为灰度图
+		for (int j = 0; j < w; ++j)
+			img_jun[i][j] = m_Image.m_pBits[2][i][j] * 0.299 + m_Image.m_pBits[1][i][j] * 0.587 + m_Image.m_pBits[0][i][j] * 0.114;
+
+	histogram_display(img_jun, hstgm);    //显示直方图
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//均衡化后的直方图
+void CImage_ProcessingView::On32817()
+{
+	img_jun_2 = histogram_equalization(img_jun); //均衡化直方图
+
+	int h = img_jun_2.size();        //获得图像宽度
+	int w = img_jun_2[0].size();     //获得图像高度
+	vector<vector<int>> hstgm(h, vector<int>(w, 0));
+
+	histogram_display(img_jun_2, hstgm);    //显示直方图
+	
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//均衡化后的图像显示
+void CImage_ProcessingView::On32818()
+{
+	int h = img_jun_2.size();        //获得图像宽度
+	int w = img_jun_2[0].size();     //获得图像高度
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_jun_2[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+
+//直方图规格化
+vector<vector<int>> img_gui, img_gui_jun, img_gui_2;        //全局变量:存储原图像，均衡化后的图像，规格化后的图像
+
+//显示原图像直方图
+void CImage_ProcessingView::On32820()
+{
+	if (m_Image.IsNull()) return;    //判断图像是否为空
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	img_gui.resize(h);
+	for (auto& c : img_gui)
+		c.resize(w);
+	img_gui_jun = img_gui_2 = img_gui;
+	auto hstgm = img_gui;
+
+	for (int i = 0; i < h; ++i)      //转换为灰度图
+		for (int j = 0; j < w; ++j)
+			img_gui[i][j] = m_Image.m_pBits[2][i][j] * 0.299 + m_Image.m_pBits[1][i][j] * 0.587 + m_Image.m_pBits[0][i][j] * 0.114;
+
+	auto x = histogram_display(img_gui, hstgm);    //显示直方图
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//希望的直方图形式，使用上步均衡化的图像作为参考
+void CImage_ProcessingView::On32821()
+{
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<int>> hstgm(h, vector<int>(w, 0));
+
+	histogram2(Pz, hstgm);
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//规格化后的直方图
+void CImage_ProcessingView::On32822()
+{
+	int w = img_gui.size();        //获得图像宽度
+	int h = img_gui[0].size();     //获得图像高度
+	
+	auto hstgm = img_gui;
+	img_gui_jun = histogram_equalization(img_gui); //均衡化图像
+	histogram_specification(img_gui_jun, img_gui_2, Pz);
+	auto x = histogram_display(img_gui_2, hstgm);          //显示直方图
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//规定化后的图像显示
+void CImage_ProcessingView::On32823()
+{
+	int w = img_gui.size();        //获得图像宽度
+	int h = img_gui[0].size();     //获得图像高度
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_gui_2[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
 
 //均值滤波
 void CImage_ProcessingView::On32806()
 {
-	;
+	; //程序在下面
 }
 
 
 //中值滤波
 void CImage_ProcessingView::On32807()
 {
-	;
+	; //程序在下面
 }
 
 //3x3均值滤波
@@ -796,79 +956,3 @@ void CImage_ProcessingView::On32813()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
-//显示直方图
-void CImage_ProcessingView::On32814()
-{
-	if (m_Image.IsNull()) return;    //判断图像是否为空
-	int w = m_Image.GetWidth();      //获得图像宽度
-	int h = m_Image.GetHeight();     //获得图像高度
-	vector<vector<int>> img(h, vector<int>(w, 0));
-	vector<vector<int>> hstgm(h, vector<int>(w, 0));
-
-	for (int i = 0; i < h; ++i)      //转换为灰度图
-		for (int j = 0; j < w; ++j)
-			img[i][j] = m_Image.m_pBits[2][i][j] * 0.299 + m_Image.m_pBits[1][i][j] * 0.587 + m_Image.m_pBits[0][i][j] * 0.114;
-
-	histogram_display(img, hstgm);    //显示直方图
-
-	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
-		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
-
-	Invalidate(1); //强制调用ONDRAW函数
-}
-
-//直方图均衡化，原图像直方图
-vector<vector<int>> img_jun, img_jun_2;          //全局变量，用于均衡化的原图像
-void CImage_ProcessingView::On32816()
-{
-	if (m_Image.IsNull()) return;    //判断图像是否为空
-	int w = m_Image.GetWidth();      //获得图像宽度
-	int h = m_Image.GetHeight();     //获得图像高度
-	img_jun.resize(h);
-	for (auto& c : img_jun)
-		c.resize(w);
-	vector<vector<int>> hstgm(h, vector<int>(w, 0));
-
-	for (int i = 0; i < h; ++i)      //转换为灰度图
-		for (int j = 0; j < w; ++j)
-			img_jun[i][j] = m_Image.m_pBits[2][i][j] * 0.299 + m_Image.m_pBits[1][i][j] * 0.587 + m_Image.m_pBits[0][i][j] * 0.114;
-
-	histogram_display(img_jun, hstgm);    //显示直方图
-
-	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
-		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
-
-	Invalidate(1); //强制调用ONDRAW函数
-}
-
-//均衡化后的直方图
-void CImage_ProcessingView::On32817()
-{
-	img_jun_2 = histogram_equalization(img_jun);
-	int h = img_jun_2.size();        //获得图像宽度
-	int w = img_jun_2[0].size();     //获得图像高度
-	vector<vector<int>> hstgm(h, vector<int>(w, 0));
-
-	histogram_display(img_jun_2, hstgm);    //显示直方图
-
-	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
-		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = hstgm[i][j];
-
-	Invalidate(1); //强制调用ONDRAW函数
-}
-
-//均衡化后的图像显示
-void CImage_ProcessingView::On32818()
-{
-	int h = img_jun_2.size();        //获得图像宽度
-	int w = img_jun_2[0].size();     //获得图像高度
-
-	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
-		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_jun_2[i][j];
-
-	Invalidate(1); //强制调用ONDRAW函数
-}
