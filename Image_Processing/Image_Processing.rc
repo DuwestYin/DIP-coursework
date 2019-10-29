@@ -53,11 +53,11 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
     "LANGUAGE 4, 2\r\n"
-    "#include ""res\\Image_Processing.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
-    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
-    "#include ""l.CHS\\afxprint.rc""    // 打印/打印预览资源\r\n"
+    "#include ""res\\Image_Processing.rc2""  // 闈?Microsoft Visual C++ 缂栬緫鐨勮祫婧?\n"
+    "#include ""l.CHS\\afxres.rc""      // 鏍囧噯缁勪欢\r\n"
+    "#include ""l.CHS\\afxprint.rc""    // 鎵撳嵃/鎵撳嵃棰勮璧勬簮\r\n"
     "#if !defined(_AFXDLL)\r\n"
-    "#include ""l.CHS\\afxribbon.rc""        // MFC 功能区和控件条资源\r\n"
+    "#include ""l.CHS\\afxribbon.rc""        // MFC 鍔熻兘鍖哄拰鎺т欢鏉¤祫婧?\n"
     "#endif\r\n"
     "#endif\r\n"
     "\0"
@@ -242,6 +242,18 @@ BEGIN
         BEGIN
             MENUITEM "3x3",                         ID_32812
             MENUITEM "5x5",                         ID_32813
+        END
+    END
+    POPUP "第三次作业"
+    BEGIN
+        POPUP "傅立叶变换"
+        BEGIN
+            MENUITEM "原图像",                         ID_32825
+            MENUITEM "原图像的傅立叶变换",                   ID_32826
+            MENUITEM "平移图像",                        ID_32827
+            MENUITEM "平移图像的傅立叶变换",                  ID_32828
+            MENUITEM "旋转图像",                        ID_32829
+            MENUITEM "旋转图像的傅立叶变换",                  ID_Menu
         END
     END
 END
@@ -518,11 +530,11 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
-#include "res\Image_Processing.rc2"  // 非 Microsoft Visual C++ 编辑的资源
-#include "l.CHS\afxres.rc"      // 标准组件
-#include "l.CHS\afxprint.rc"    // 打印/打印预览资源
+#include "res\Image_Processing.rc2"  // 闈?Microsoft Visual C++ 缂栬緫鐨勮祫婧?
+#include "l.CHS\afxres.rc"      // 鏍囧噯缁勪欢
+#include "l.CHS\afxprint.rc"    // 鎵撳嵃/鎵撳嵃棰勮璧勬簮
 #if !defined(_AFXDLL)
-#include "l.CHS\afxribbon.rc"        // MFC 功能区和控件条资源
+#include "l.CHS\afxribbon.rc"        // MFC 鍔熻兘鍖哄拰鎺т欢鏉¤祫婧?
 #endif
 #endif
 

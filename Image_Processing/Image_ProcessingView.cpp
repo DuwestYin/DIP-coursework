@@ -11,7 +11,9 @@
 #include "Image_ProcessingDoc.h"
 #include "Image_ProcessingView.h"
 
-#include "yyj.h"
+#include "yyj01.h"
+#include "yyj02.h"
+#include "yyj03.h"
 #include <string>
 #include <vector>
 
@@ -76,6 +78,12 @@ ON_COMMAND(ID_32820, &CImage_ProcessingView::On32820)
 ON_COMMAND(ID_32821, &CImage_ProcessingView::On32821)
 ON_COMMAND(ID_32822, &CImage_ProcessingView::On32822)
 ON_COMMAND(ID_32823, &CImage_ProcessingView::On32823)
+ON_COMMAND(ID_32825, &CImage_ProcessingView::On32825)
+ON_COMMAND(ID_32826, &CImage_ProcessingView::On32826)
+ON_COMMAND(ID_32827, &CImage_ProcessingView::On32827)
+ON_COMMAND(ID_32828, &CImage_ProcessingView::On32828)
+ON_COMMAND(ID_32829, &CImage_ProcessingView::On32829)
+ON_COMMAND(ID_32831, &CImage_ProcessingView::On32831)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -956,3 +964,107 @@ void CImage_ProcessingView::On32813()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
+
+//第三次作业
+//显示傅里叶变换原图像
+void CImage_ProcessingView::On32825()   
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img1.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//原图像的傅立叶变换
+void CImage_ProcessingView::On32826()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img1.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+	auto img_fft = img_raw;
+
+	fft(img_raw, img_fft);
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+
+}
+
+//平移后的图像
+void CImage_ProcessingView::On32827()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img2.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//平移后图像的傅立叶变换
+void CImage_ProcessingView::On32828()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img2.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+	auto img_fft = img_raw;
+
+	fft(img_raw, img_fft);
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//旋转后的图像
+void CImage_ProcessingView::On32829()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img3.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//旋转后图像的傅立叶变换
+void CImage_ProcessingView::On32831()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img3.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+	auto img_fft = img_raw;
+
+	fft(img_raw, img_fft);
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}

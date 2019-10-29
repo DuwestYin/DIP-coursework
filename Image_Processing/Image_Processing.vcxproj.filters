@@ -60,7 +60,13 @@
     <ClInclude Include="MyImage_.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="yyj.h">
+    <ClInclude Include="yyj01.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="yyj02.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="yyj03.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,7 +89,13 @@
     <ClCompile Include="MyImage_.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="yyj.cpp">
+    <ClCompile Include="yyj01.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="yyj02.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="yyj03.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
