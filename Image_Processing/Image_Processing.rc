@@ -253,7 +253,22 @@ BEGIN
             MENUITEM "平移图像",                        ID_32827
             MENUITEM "平移图像的傅立叶变换",                  ID_32828
             MENUITEM "旋转图像",                        ID_32829
-            MENUITEM "旋转图像的傅立叶变换",                  ID_Menu
+            MENUITEM "旋转图像的傅立叶变换",                  ID_32831
+        END
+        POPUP "频率域滤波"
+        BEGIN
+            MENUITEM "原图像",                         ID_32833
+            MENUITEM "理想低通滤波",                      ID_32834
+            MENUITEM "巴特沃斯低通滤波",                    ID_32835
+            MENUITEM "高斯低通滤波",                      ID_32836
+            MENUITEM "理想高通滤波",                      ID_32837
+            MENUITEM "巴特沃斯高通滤波",                    ID_32838
+            MENUITEM "高斯高通滤波",                      ID_32839
+        END
+        POPUP "不填充0的效果"
+        BEGIN
+            MENUITEM "不填充0的低通滤波",                   ID_Menu32841
+            MENUITEM "不填充0的高通滤波",                   ID_32842
         END
     END
 END

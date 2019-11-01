@@ -84,6 +84,8 @@ ON_COMMAND(ID_32827, &CImage_ProcessingView::On32827)
 ON_COMMAND(ID_32828, &CImage_ProcessingView::On32828)
 ON_COMMAND(ID_32829, &CImage_ProcessingView::On32829)
 ON_COMMAND(ID_32831, &CImage_ProcessingView::On32831)
+ON_COMMAND(ID_32833, &CImage_ProcessingView::On32833)
+ON_COMMAND(ID_32834, &CImage_ProcessingView::On32834)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -989,13 +991,19 @@ void CImage_ProcessingView::On32826()
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
-	auto img_fft = img_raw;
 
-	fft(img_raw, img_fft);
+	normalize(img_raw, 0, 1);
+	move2center(img_raw);
+	auto img_mag = img_raw;
+	auto img_ang = img_raw;
+
+	fft(img_raw, img_mag, img_ang);
+	log_exp(img_mag);
+	normalize(img_mag, 0, 255);
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_mag[i][j];
 
 	Invalidate(1); //强制调用ONDRAW函数
 
@@ -1024,13 +1032,19 @@ void CImage_ProcessingView::On32828()
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
-	auto img_fft = img_raw;
 
-	fft(img_raw, img_fft);
+	normalize(img_raw, 0, 1);
+	move2center(img_raw);
+	auto img_mag = img_raw;
+	auto img_ang = img_raw;
+
+	fft(img_raw, img_mag, img_ang);
+	log_exp(img_mag);
+	normalize(img_mag, 0, 255);
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_mag[i][j];
 
 	Invalidate(1); //强制调用ONDRAW函数
 }
@@ -1058,13 +1072,71 @@ void CImage_ProcessingView::On32831()
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
-	auto img_fft = img_raw;
 
-	fft(img_raw, img_fft);
+	normalize(img_raw, 0, 1);
+	move2center(img_raw);
+	auto img_mag = img_raw;
+	auto img_ang = img_raw;
+
+	fft(img_raw, img_mag, img_ang);
+	log_exp(img_mag);
+	normalize(img_mag, 0, 255);
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
-			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_fft[i][j];
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_mag[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//显示用于滤波的原图像
+void CImage_ProcessingView::On32833()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//理想低通滤波
+void CImage_ProcessingView::On32834()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;
+	int Q = 2 * w;
+	int D = 20;
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));
+	vector<vector<double>> H(P, vector<double>(Q, 0));
+	vector<vector<double>> G(P, vector<double>(Q, 0));
+
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+	normalize(img_raw, 0, 1);
+	move2center(img_raw);
+	img2big(img_raw, img_exp);
+	fft(img_exp, img_mag, img_ang);
+	make_filter(H, D, 0);
+	act_filter(img_mag, H, G);
+	invfft(G, img_ang, img_exp);
+
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);
+	normalize(img_raw, 0, 255);
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
 
 	Invalidate(1); //强制调用ONDRAW函数
 }
