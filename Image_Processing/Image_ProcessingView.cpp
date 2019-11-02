@@ -86,6 +86,13 @@ ON_COMMAND(ID_32829, &CImage_ProcessingView::On32829)
 ON_COMMAND(ID_32831, &CImage_ProcessingView::On32831)
 ON_COMMAND(ID_32833, &CImage_ProcessingView::On32833)
 ON_COMMAND(ID_32834, &CImage_ProcessingView::On32834)
+ON_COMMAND(ID_32835, &CImage_ProcessingView::On32835)
+ON_COMMAND(ID_32836, &CImage_ProcessingView::On32836)
+ON_COMMAND(ID_32837, &CImage_ProcessingView::On32837)
+ON_COMMAND(ID_32838, &CImage_ProcessingView::On32838)
+ON_COMMAND(ID_32839, &CImage_ProcessingView::On32839)
+ON_COMMAND(ID_32842, &CImage_ProcessingView::On32842)
+ON_COMMAND(ID_32843, &CImage_ProcessingView::On32843)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -288,6 +295,7 @@ void CImage_ProcessingView::OnFileSaveAs()
 //                                                                                             //(图像 0:B 1:G 2:R)
 //                    *注 核心的函数代码储存在 yyj.h 和 yyj.c 文件中                           //
 /////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //第一次作业
 //1. 降低图像空间分辨率1/2
@@ -670,6 +678,7 @@ void CImage_ProcessingView::On32805()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //第二次作业
 //显示直方图
 vector<double> Pz(256, 0);
@@ -966,7 +975,7 @@ void CImage_ProcessingView::On32813()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //第三次作业
 //显示傅里叶变换原图像
 void CImage_ProcessingView::On32825()   
@@ -987,19 +996,19 @@ void CImage_ProcessingView::On32826()
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
 
-	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //把图像赋值给一个vector数组
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
 
-	normalize(img_raw, 0, 1);
-	move2center(img_raw);
-	auto img_mag = img_raw;
-	auto img_ang = img_raw;
+	normalize(img_raw, 0, 1);       //灰度值缩放到0-1之间
+	move2center(img_raw);           //将傅里叶频谱移到图像中心
+	auto img_mag = img_raw;         //幅度谱
+	auto img_ang = img_raw;         //相角谱
 
-	fft(img_raw, img_mag, img_ang);
-	log_exp(img_mag);
-	normalize(img_mag, 0, 255);
+	fft(img_raw, img_mag, img_ang); //进行傅立叶变换
+	log_exp(img_mag);               //对数拉伸灰度值较小的像素
+	normalize(img_mag, 0, 255);     //将灰度缩放到0-255
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
@@ -1028,19 +1037,19 @@ void CImage_ProcessingView::On32828()
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
 
-	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //图像赋值给vector数组
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
 
-	normalize(img_raw, 0, 1);
-	move2center(img_raw);
-	auto img_mag = img_raw;
-	auto img_ang = img_raw;
+	normalize(img_raw, 0, 1);          //归一化
+	move2center(img_raw);              //频谱移到中心
+	auto img_mag = img_raw;            //幅值
+	auto img_ang = img_raw;            //相角
 
-	fft(img_raw, img_mag, img_ang);
-	log_exp(img_mag);
-	normalize(img_mag, 0, 255);
+	fft(img_raw, img_mag, img_ang);    //快速傅立叶变换
+	log_exp(img_mag);                  //对数拉伸
+	normalize(img_mag, 0, 255);        //归一化到0-255
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
@@ -1068,19 +1077,19 @@ void CImage_ProcessingView::On32831()
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
 
-	vector<vector<double>> img_raw(h, vector<double>(w, 0));
+	vector<vector<double>> img_raw(h, vector<double>(w, 0)); //图像赋值给vector数组
 	for (int i = 0; i < h; ++i)
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
 
-	normalize(img_raw, 0, 1);
-	move2center(img_raw);
-	auto img_mag = img_raw;
-	auto img_ang = img_raw;
+	normalize(img_raw, 0, 1);    //归一化
+	move2center(img_raw);        //频谱移到中心
+	auto img_mag = img_raw;      //幅值
+	auto img_ang = img_raw;      //相角
 
-	fft(img_raw, img_mag, img_ang);
-	log_exp(img_mag);
-	normalize(img_mag, 0, 255);
+	fft(img_raw, img_mag, img_ang);   //快速傅立叶变换
+	log_exp(img_mag);                 //对数拉伸
+	normalize(img_mag, 0, 255);       //归一化到0-255
 
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
@@ -1107,33 +1116,327 @@ void CImage_ProcessingView::On32834()
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
-	int P = 2 * h;
-	int Q = 2 * w;
-	int D = 20;
-	vector<vector<double>> img_raw(h, vector<double>(w, 0));
-	vector<vector<double>> img_exp(P, vector<double>(Q, 0));
-	vector<vector<double>> img_mag(P, vector<double>(Q, 0));
-	vector<vector<double>> img_ang(P, vector<double>(Q, 0));
-	vector<vector<double>> H(P, vector<double>(Q, 0));
-	vector<vector<double>> G(P, vector<double>(Q, 0));
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 30;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
 
-	for (int i = 0; i < h; ++i)
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = m_Image.m_pBits[0][i][j];
-	normalize(img_raw, 0, 1);
-	move2center(img_raw);
-	img2big(img_raw, img_exp);
-	fft(img_exp, img_mag, img_ang);
-	make_filter(H, D, 0);
-	act_filter(img_mag, H, G);
-	invfft(G, img_ang, img_exp);
 
-	for (int i = 0; i < h; ++i)
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 0);              //生成理想低通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
 		for (int j = 0; j < w; ++j)
 			img_raw[i][j] = img_exp[i][j];
 
-	move2center(img_raw);
-	normalize(img_raw, 0, 255);
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//巴特沃斯低通滤波
+void CImage_ProcessingView::On32835()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 30;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
+
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 1);              //生成巴特沃斯低通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//高斯低通滤波
+void CImage_ProcessingView::On32836()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 30;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
+
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 2);              //生成高斯低通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//理想高通滤波
+void CImage_ProcessingView::On32837()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 50;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
+
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 3);              //生成理想高通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//巴特沃斯高通滤波
+void CImage_ProcessingView::On32838()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 50;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
+
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 4);              //生成巴特沃斯高通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//高斯高通滤波
+void CImage_ProcessingView::On32839()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int P = 2 * h;                   //填0扩充后的高度
+	int Q = 2 * w;                   //填0扩充后的宽度
+	int D = 50;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));   //原图像
+	vector<vector<double>> img_exp(P, vector<double>(Q, 0));   //扩充后的图像
+	vector<vector<double>> img_mag(P, vector<double>(Q, 0));   //幅值谱
+	vector<vector<double>> img_ang(P, vector<double>(Q, 0));   //相角谱
+	vector<vector<double>> H(P, vector<double>(Q, 0));         //滤波器
+	vector<vector<double>> G(P, vector<double>(Q, 0));         //滤波后的幅度谱
+
+	for (int i = 0; i < h; ++i)          //图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);          //归一化到0-1之间
+	move2center(img_raw);              //将傅立叶谱移到中心
+	img2big(img_raw, img_exp);         //填0扩充到两倍
+	fft(img_exp, img_mag, img_ang);    //快速傅立叶变换
+	make_filter(H, D, 5);              //生成高斯高通滤波器
+	act_filter(img_mag, H, G);         //执行滤波
+	invfft(G, img_ang, img_exp);       //傅立叶反变化
+
+	for (int i = 0; i < h; ++i)        //取反变化后图像的四分之一左上角
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = img_exp[i][j];
+
+	move2center(img_raw);              //移回原来的图像
+	normalize(img_raw, 0, 255);        //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//不填充0的高通滤波
+void CImage_ProcessingView::On32842()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int D = 50;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));  //原图像
+	vector<vector<double>> img_mag(h, vector<double>(w, 0));  //幅值
+	vector<vector<double>> img_ang(h, vector<double>(w, 0));  //相角
+	vector<vector<double>> H(h, vector<double>(w, 0));        //滤波器
+	vector<vector<double>> G(h, vector<double>(w, 0));        //滤波后的幅值
+
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);           //归一化到0-1之间
+	move2center(img_raw);               //移动傅立叶谱到中心
+	fft(img_raw, img_mag, img_ang);     //快速傅立叶变换
+	make_filter(H, D, 5);               //构造高斯高通滤波器
+	act_filter(img_mag, H, G);          //执行滤波
+	invfft(G, img_ang, img_raw);        //傅立叶反变化
+
+	move2center(img_raw);               //移回图像
+	normalize(img_raw, 0, 255);         //归一化到0-255
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//不填充0的低通滤波
+void CImage_ProcessingView::On32843()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	int D = 30;                      //滤波器半径
+	vector<vector<double>> img_raw(h, vector<double>(w, 0));  //原图像
+	vector<vector<double>> img_mag(h, vector<double>(w, 0));  //幅值
+	vector<vector<double>> img_ang(h, vector<double>(w, 0));  //相角
+	vector<vector<double>> H(h, vector<double>(w, 0));        //滤波器
+	vector<vector<double>> G(h, vector<double>(w, 0));        //滤波后的幅值
+
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = m_Image.m_pBits[0][i][j];
+
+	normalize(img_raw, 0, 1);           //归一化到0-1之间
+	move2center(img_raw);               //移动傅立叶谱到中心
+	fft(img_raw, img_mag, img_ang);     //快速傅立叶变换
+	make_filter(H, D, 2);               //构造高斯低通滤波器
+	act_filter(img_mag, H, G);          //执行滤波
+	invfft(G, img_ang, img_raw);        //傅立叶反变化
+
+	move2center(img_raw);               //移回图像
+	normalize(img_raw, 0, 255);         //归一化到0-255
+
 	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
 		for (int j = 0; j < w; ++j)
 			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];

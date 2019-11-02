@@ -267,8 +267,8 @@ BEGIN
         END
         POPUP "不填充0的效果"
         BEGIN
-            MENUITEM "不填充0的低通滤波",                   ID_Menu32841
             MENUITEM "不填充0的高通滤波",                   ID_32842
+            MENUITEM "不填充0的低通滤波",                   ID_32843
         END
     END
 END
