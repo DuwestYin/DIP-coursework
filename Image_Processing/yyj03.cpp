@@ -9,14 +9,14 @@ using std::complex;
 
 const double pi = 3.141592653;
 
-//Å·À­¹«Ê½
+//æ¬§æ‹‰å…¬å¼
 complex<double> euler_fun(double x)
 {
 	complex<double> y(cos(x), sin(x));
 	return y;
 }
 
-//½«Í¼Ïñ»Ò¶ÈÖµ¹éÒ»»¯µ½Ö¸¶¨·¶Î§[a, b]
+//å°†å›¾åƒç°åº¦å€¼å½’ä¸€åŒ–åˆ°æŒ‡å®šèŒƒå›´[a, b]
 void normalize(vector<vector<double>>& img, double a, double b)
 {
 	double max = 0, min = 0;
@@ -33,7 +33,7 @@ void normalize(vector<vector<double>>& img, double a, double b)
 			img[i][j] = (img[i][j] - min) * (b - a) / (max - min) + a;
 }
 
-//½«Í¼Ïñ³ËÉÏ(-1)^(i+j)£¬¸µÁ¢Ò¶Æ×ÒÆ¶¯ÖĞĞÄ
+//å°†å›¾åƒä¹˜ä¸Š(-1)^(i+j)ï¼Œå‚…ç«‹å¶è°±ç§»åŠ¨ä¸­å¿ƒ
 void move2center(vector<vector<double>>& img)
 {
 	int m = img.size();
@@ -43,7 +43,7 @@ void move2center(vector<vector<double>>& img)
 			img[i][j] *= pow(-1, i + j);
 }
 
-//¶Ô¸µÁ¢Ò¶±ä»»ºóµÄ½á¹ûÈ¡¶ÔÊı£¬ÒÔÀ­Éì½Ï°µµÄ»Ò¶È
+//å¯¹å‚…ç«‹å¶å˜æ¢åçš„ç»“æœå–å¯¹æ•°ï¼Œä»¥æ‹‰ä¼¸è¾ƒæš—çš„ç°åº¦
 void log_exp(vector<vector<double>>& img)
 {
 	int m = img.size();
@@ -54,13 +54,13 @@ void log_exp(vector<vector<double>>& img)
 
 }
 
-//»ñÈ¡¸´ÊıµÄÏà½Ç
+//è·å–å¤æ•°çš„ç›¸è§’
 double get_angle(complex<double> x)
 {
 	return atan2(x.imag(), x.real());
 }
 
-//½«Í¼ÏñÌî0À©³äÎªÔ­À´µÄÁ½±¶
+//å°†å›¾åƒå¡«0æ‰©å……ä¸ºåŸæ¥çš„ä¸¤å€
 void img2big(vector<vector<double>>& img1, vector<vector<double>>& img2)
 {
 	int m = img1.size();
@@ -70,7 +70,7 @@ void img2big(vector<vector<double>>& img1, vector<vector<double>>& img2)
 			img2[i][j] = img1[i][j];
 }
 
-//¹¹ÔìÂË²¨Æ÷
+//æ„é€ æ»¤æ³¢å™¨
 void make_filter(vector<vector<double>>& H, int D, int num)
 {
 	int P = H.size();
@@ -79,7 +79,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 	int n = Q / 2;
 	switch (num)
 	{
-	case 0:           //ÀíÏëµÍÍ¨
+	case 0:           //ç†æƒ³ä½é€š
 	{
 		for (int i = -D; i < D; ++i)
 			for (int j = -D; j < D; ++j)
@@ -89,7 +89,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 			}
 		break;
 	}
-	case 1:     //°ÍÌØÎÖË¹µÍÍ¨
+	case 1:     //å·´ç‰¹æ²ƒæ–¯ä½é€š
 	{
 		for (int i = 0; i < P; ++i)   
 			for (int j = 0; j < Q; ++j)
@@ -99,7 +99,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 			}
 		break;
 	}
-	case 2:     //¸ßË¹µÍÍ¨
+	case 2:     //é«˜æ–¯ä½é€š
 	{
 		for (int i = 0; i < P; ++i)   
 			for (int j = 0; j < Q; ++j)
@@ -109,7 +109,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 			}
 		break;
 	}
-	case 3:  //ÀíÏë¸ßÍ¨
+	case 3:  //ç†æƒ³é«˜é€š
 	{
 		for (int i = -D; i < D; ++i)
 			for (int j = -D; j < D; ++j)
@@ -122,7 +122,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 				H[i][j] = 1 - H[i][j];
 		break;
 	}
-	case 4:   //°ÍÌØÎÖË¹¸ßÍ¨
+	case 4:   //å·´ç‰¹æ²ƒæ–¯é«˜é€š
 	{
 		for (int i = 0; i < P; ++i)   
 			for (int j = 0; j < Q; ++j)
@@ -132,7 +132,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 			}
 		break;
 	}
-	case 5:     //¸ßË¹¸ßÍ¨
+	case 5:     //é«˜æ–¯é«˜é€š
 	{
 		for (int i = 0; i < P; ++i)   
 			for (int j = 0; j < Q; ++j)
@@ -146,7 +146,7 @@ void make_filter(vector<vector<double>>& H, int D, int num)
 		
 }
 
-//Ö´ĞĞÍ¼Ïñ¶ÔÓ¦ÏñËØÖ®¼äµÄ³Ë·¨£¬ÂË²¨²Ù×÷
+//æ‰§è¡Œå›¾åƒå¯¹åº”åƒç´ ä¹‹é—´çš„ä¹˜æ³•ï¼Œæ»¤æ³¢æ“ä½œ
 void act_filter(vector<vector<double>>& img_mag, vector<vector<double>>& H, vector<vector<double>>& G)
 {
 	int m = img_mag.size();
@@ -156,7 +156,7 @@ void act_filter(vector<vector<double>>& img_mag, vector<vector<double>>& H, vect
 			G[i][j] = H[i][j] * img_mag[i][j];
 }
 
-//¿ìËÙ¸µÁ¢Ò¶±ä»»
+//å¿«é€Ÿå‚…ç«‹å¶å˜æ¢
 void fft(const vector<vector<double>>& img, vector<vector<double>>& img_mag, vector<vector<double>>& img_ang)
 {
 	int P= img.size();
@@ -164,66 +164,66 @@ void fft(const vector<vector<double>>& img, vector<vector<double>>& img_mag, vec
 	int m = P / 2;
 	int n = Q / 2;
 	
-	vector<vector<complex<double>>> img1;   //ÁÙÊ±vectorÊı×é£¬´æ´¢µÚÒ»´Î±ä»»µÄ¸´ÊıÖµ
+	vector<vector<complex<double>>> img1;   //ä¸´æ—¶vectoræ•°ç»„ï¼Œå­˜å‚¨ç¬¬ä¸€æ¬¡å˜æ¢çš„å¤æ•°å€¼
 	img1.resize(P);
 	for (int i = 0; i < P; ++i)
 		img1[i].resize(Q);
 
-	for (int u = 0; u < P; ++u)            //ÏÈ¶ÔÃ¿Ò»ĞĞ½øĞĞ±ä»»
+	for (int u = 0; u < P; ++u)            //å…ˆå¯¹æ¯ä¸€è¡Œè¿›è¡Œå˜æ¢
 	{
-		vector<complex<double>> fft_even;  //Å¼Êı²¿·Ö
-		vector<complex<double>> fft_odd;   //ÆæÊı²¿·Ö
-		for (int v = 0; v < n; ++v)        //±éÀúÒ»ĞĞµÄËùÓĞÔªËØ
+		vector<complex<double>> fft_even;  //å¶æ•°éƒ¨åˆ†
+		vector<complex<double>> fft_odd;   //å¥‡æ•°éƒ¨åˆ†
+		for (int v = 0; v < n; ++v)        //éå†ä¸€è¡Œçš„æ‰€æœ‰å…ƒç´ 
 		{
-			complex<double> temp_even(0, 0);  //ÁÙÊ±±äÁ¿
+			complex<double> temp_even(0, 0);  //ä¸´æ—¶å˜é‡
 			complex<double> temp_odd(0, 0);
 			for (int y = 0; y < n; ++y)
 			{
-				complex<double> W = euler_fun(-2 * pi * y * v / n);   //Å·À­¹«Ê½
-				temp_even += img[u][2 * y] * W;           //Å¼ÊıµÄ±ä»»
-				temp_odd += img[u][2 * y + 1] * W;        //ÆæÊıµÄ±ä»»
+				complex<double> W = euler_fun(-2 * pi * y * v / n);   //æ¬§æ‹‰å…¬å¼
+				temp_even += img[u][2 * y] * W;           //å¶æ•°çš„å˜æ¢
+				temp_odd += img[u][2 * y + 1] * W;        //å¥‡æ•°çš„å˜æ¢
 			}
-			fft_even.push_back(temp_even);       //ÍÆ½øÁÙÊ±Êı×é
+			fft_even.push_back(temp_even);       //æ¨è¿›ä¸´æ—¶æ•°ç»„
 			fft_odd.push_back(temp_odd);
 		}
 		for (int v = 0; v < n; ++v)
 		{
 			complex<double> fw = fft_odd[v] * euler_fun(-2 * pi * v / Q);   
-			img1[u][v] = fft_even[v] + fw;               //½«±ä»»½á¹û·ùÖµ¸øÖĞ¼äÊı×é
+			img1[u][v] = fft_even[v] + fw;               //å°†å˜æ¢ç»“æœå¹…å€¼ç»™ä¸­é—´æ•°ç»„
 			img1[u][v + n] = fft_even[v] - fw;
 		}
 	}
 
-	for (int v = 0; v < Q; ++v)            //ÔÙ¶ÔÃ¿Ò»ÁĞ½øĞĞ±ä»»
+	for (int v = 0; v < Q; ++v)            //å†å¯¹æ¯ä¸€åˆ—è¿›è¡Œå˜æ¢
 	{
-		vector<complex<double>> fft_even;  //Å¼Êı²¿·Ö
-		vector<complex<double>> fft_odd;   //ÆæÊı²¿·Ö
-		for (int u = 0; u < m; ++u)        //±éÀúÃ¿Ò»ÁĞµÄËùÓĞÔªËØ
+		vector<complex<double>> fft_even;  //å¶æ•°éƒ¨åˆ†
+		vector<complex<double>> fft_odd;   //å¥‡æ•°éƒ¨åˆ†
+		for (int u = 0; u < m; ++u)        //éå†æ¯ä¸€åˆ—çš„æ‰€æœ‰å…ƒç´ 
 		{
-			complex<double> temp_even(0, 0);  //ÁÙÊ±±äÁ¿
+			complex<double> temp_even(0, 0);  //ä¸´æ—¶å˜é‡
 			complex<double> temp_odd(0, 0);
 			for (int x = 0; x < m; ++x)
 			{
-				complex<double> W = euler_fun(-2 * pi * x * u / m);    //Å·À­¹«Ê½
-				temp_even += img1[2 * x][v] * W;       //Å¼ÊıµÄ±ä»»
-				temp_odd += img1[2 * x + 1][v] * W;    //ÆæÊıµÄ±ä»»
+				complex<double> W = euler_fun(-2 * pi * x * u / m);    //æ¬§æ‹‰å…¬å¼
+				temp_even += img1[2 * x][v] * W;       //å¶æ•°çš„å˜æ¢
+				temp_odd += img1[2 * x + 1][v] * W;    //å¥‡æ•°çš„å˜æ¢
 			}
-			fft_even.push_back(temp_even);       //ÍÆÈëÁÙÊ±Êı×é
+			fft_even.push_back(temp_even);       //æ¨å…¥ä¸´æ—¶æ•°ç»„
 			fft_odd.push_back(temp_odd);
 		}
 		for (int u = 0; u < m; ++u)
 		{
 			complex<double> fw = fft_odd[u] * euler_fun(-2 * pi * u / P);
-		    img_mag[u][v] = abs(fft_even[u] + fw);                //¸µÁ¢Ò¶±ä»»µÄ·ùÖµ
+		    img_mag[u][v] = abs(fft_even[u] + fw);                //å‚…ç«‹å¶å˜æ¢çš„å¹…å€¼
 			img_mag[u + m][v] = abs(fft_even[u] - fw);
-			img_ang[u][v] = get_angle(fft_even[u] + fw);          //¸µÁ¢Ò¶±ä»»µÄÏà½Ç
+			img_ang[u][v] = get_angle(fft_even[u] + fw);          //å‚…ç«‹å¶å˜æ¢çš„ç›¸è§’
 			img_ang[u + m][v] = get_angle(fft_even[u] - fw);
 		}
 	}
 
 }
 
-//¸µÁ¢Ò¶·´±ä»¯£¬Í¬¿ìËÙ¸µÁ¢Ò¶±ä»»¼¸ºõÒ»Ñù
+//å‚…ç«‹å¶åå˜åŒ–ï¼ŒåŒå¿«é€Ÿå‚…ç«‹å¶å˜æ¢å‡ ä¹ä¸€æ ·
 void invfft(vector<vector<double>>& img_mag, vector<vector<double>>& img_ang, vector<vector<double>>& img_new)
 {
 	int P = img_mag.size();
@@ -236,7 +236,7 @@ void invfft(vector<vector<double>>& img_mag, vector<vector<double>>& img_ang, ve
 	for (int i = 0; i < P; ++i)
 		img1[i].resize(Q);
 
-	for (int u = 0; u < P; ++u)                //½øĞĞÃ¿ĞĞµÄ±ä»»
+	for (int u = 0; u < P; ++u)                //è¿›è¡Œæ¯è¡Œçš„å˜æ¢
 	{
 		vector<complex<double>> fft_even;
 		vector<complex<double>> fft_odd;
@@ -261,7 +261,7 @@ void invfft(vector<vector<double>>& img_mag, vector<vector<double>>& img_ang, ve
 		}
 	}
 
-	for (int v = 0; v < Q; ++v)          //½øĞĞÃ¿ÁĞµÄ±ä»»
+	for (int v = 0; v < Q; ++v)          //è¿›è¡Œæ¯åˆ—çš„å˜æ¢
 	{
 		vector<complex<double>> fft_even;
 		vector<complex<double>> fft_odd;
@@ -282,7 +282,7 @@ void invfft(vector<vector<double>>& img_mag, vector<vector<double>>& img_ang, ve
 		{
 			complex<double> fw = fft_odd[u] * euler_fun(2 * pi * u / P);
 			complex<double> a = fft_even[u] + fw;
-			img_new[u][v] = a.real();        //È¡·´±ä»»µÄÊµ²¿
+			img_new[u][v] = a.real();        //å–åå˜æ¢çš„å®éƒ¨
 			a = fft_even[u] - fw;
 			img_new[u + m][v] = a.real();
 		}
