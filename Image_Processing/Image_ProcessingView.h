@@ -105,6 +105,20 @@ public:
 	afx_msg void On32839();
 	afx_msg void On32842();
 	afx_msg void On32843();
+	afx_msg void OnRgb32860();
+	afx_msg void OnRgb32861();
+	afx_msg void OnRgb32862();
+	afx_msg void OnRgb32863();
+	afx_msg void OnHsi32865();
+	afx_msg void OnHsi32866();
+	afx_msg void OnHsi32867();
+	afx_msg void OnHsi32868();
+	afx_msg void On32870();
+	afx_msg void On32871();
+	afx_msg void On32872();
+	afx_msg void On32874();
+	afx_msg void On32875();
+	afx_msg void On32876();
 };
 
 #ifndef _DEBUG  // Image_ProcessingView.cpp 中的调试版本

@@ -271,6 +271,35 @@ BEGIN
             MENUITEM "不填充0的低通滤波",                   ID_32843
         END
     END
+    POPUP "第四次作业"
+    BEGIN
+        POPUP "RGB分量显示"
+        BEGIN
+            MENUITEM "原图像",                         ID_RGB32860
+            MENUITEM "R分量",                         ID_RGB32861
+            MENUITEM "G分量",                         ID_RGB32862
+            MENUITEM "B分量",                         ID_RGB32863
+        END
+        POPUP "HSI分量显示"
+        BEGIN
+            MENUITEM "原图像",                         ID_HSI32865
+            MENUITEM "H分量",                         ID_HSI32866
+            MENUITEM "S分量",                         ID_HSI32867
+            MENUITEM "I分量",                         ID_HSI32868
+        END
+        POPUP "两种均衡化"
+        BEGIN
+            MENUITEM "原图像",                         ID_32870
+            MENUITEM "RGB均衡化",                      ID_32871
+            MENUITEM "HSI均衡化",                      ID_32872
+        END
+        POPUP "色彩图像分割"
+        BEGIN
+            MENUITEM "原图像",                         ID_32874
+            MENUITEM "参考色彩区域",                      ID_32875
+            MENUITEM "分割二值化结果",                     ID_32876
+        END
+    END
 END
 
 IDR_POPUP_EDIT MENU

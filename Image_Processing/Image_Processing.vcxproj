@@ -116,6 +116,7 @@
     <ClInclude Include="yyj01.h" />
     <ClInclude Include="yyj02.h" />
     <ClInclude Include="yyj03.h" />
+    <ClInclude Include="yyj04.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image_Processing.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="yyj01.cpp" />
     <ClCompile Include="yyj02.cpp" />
     <ClCompile Include="yyj03.cpp" />
+    <ClCompile Include="yyj04.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Image_Processing.rc" />

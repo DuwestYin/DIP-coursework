@@ -14,6 +14,7 @@
 #include "yyj01.h"
 #include "yyj02.h"
 #include "yyj03.h"
+#include "yyj04.h"
 #include <string>
 #include <vector>
 
@@ -93,6 +94,20 @@ ON_COMMAND(ID_32838, &CImage_ProcessingView::On32838)
 ON_COMMAND(ID_32839, &CImage_ProcessingView::On32839)
 ON_COMMAND(ID_32842, &CImage_ProcessingView::On32842)
 ON_COMMAND(ID_32843, &CImage_ProcessingView::On32843)
+ON_COMMAND(ID_RGB32860, &CImage_ProcessingView::OnRgb32860)
+ON_COMMAND(ID_RGB32861, &CImage_ProcessingView::OnRgb32861)
+ON_COMMAND(ID_RGB32862, &CImage_ProcessingView::OnRgb32862)
+ON_COMMAND(ID_RGB32863, &CImage_ProcessingView::OnRgb32863)
+ON_COMMAND(ID_HSI32865, &CImage_ProcessingView::OnHsi32865)
+ON_COMMAND(ID_HSI32866, &CImage_ProcessingView::OnHsi32866)
+ON_COMMAND(ID_HSI32867, &CImage_ProcessingView::OnHsi32867)
+ON_COMMAND(ID_HSI32868, &CImage_ProcessingView::OnHsi32868)
+ON_COMMAND(ID_32870, &CImage_ProcessingView::On32870)
+ON_COMMAND(ID_32871, &CImage_ProcessingView::On32871)
+ON_COMMAND(ID_32872, &CImage_ProcessingView::On32872)
+ON_COMMAND(ID_32874, &CImage_ProcessingView::On32874)
+ON_COMMAND(ID_32875, &CImage_ProcessingView::On32875)
+ON_COMMAND(ID_32876, &CImage_ProcessingView::On32876)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -981,7 +996,7 @@ void CImage_ProcessingView::On32813()
 void CImage_ProcessingView::On32825()   
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img1.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img1.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 
 	Invalidate(1); //强制调用ONDRAW函数
@@ -991,7 +1006,7 @@ void CImage_ProcessingView::On32825()
 void CImage_ProcessingView::On32826()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img1.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img1.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1022,7 +1037,7 @@ void CImage_ProcessingView::On32826()
 void CImage_ProcessingView::On32827()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img2.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img2.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 
 	Invalidate(1); //强制调用ONDRAW函数
@@ -1062,7 +1077,7 @@ void CImage_ProcessingView::On32828()
 void CImage_ProcessingView::On32829()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img3.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img3.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 
 	Invalidate(1); //强制调用ONDRAW函数
@@ -1072,7 +1087,7 @@ void CImage_ProcessingView::On32829()
 void CImage_ProcessingView::On32831()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img3.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img3.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1102,7 +1117,7 @@ void CImage_ProcessingView::On32831()
 void CImage_ProcessingView::On32833()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 
 	Invalidate(1); //强制调用ONDRAW函数
@@ -1112,7 +1127,7 @@ void CImage_ProcessingView::On32833()
 void CImage_ProcessingView::On32834()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1156,7 +1171,7 @@ void CImage_ProcessingView::On32834()
 void CImage_ProcessingView::On32835()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1200,7 +1215,7 @@ void CImage_ProcessingView::On32835()
 void CImage_ProcessingView::On32836()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1244,7 +1259,7 @@ void CImage_ProcessingView::On32836()
 void CImage_ProcessingView::On32837()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1288,7 +1303,7 @@ void CImage_ProcessingView::On32837()
 void CImage_ProcessingView::On32838()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1332,7 +1347,7 @@ void CImage_ProcessingView::On32838()
 void CImage_ProcessingView::On32839()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1376,7 +1391,7 @@ void CImage_ProcessingView::On32839()
 void CImage_ProcessingView::On32842()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1412,7 +1427,7 @@ void CImage_ProcessingView::On32842()
 void CImage_ProcessingView::On32843()
 {
 	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
-	std::string file_path = "./imgs/img4.jpg";       //图像文件路径
+	std::string file_path = "./ex3_imgs/img4.jpg";       //图像文件路径
 	m_Image.Load(file_path.c_str());                 //读取图像
 	int w = m_Image.GetWidth();      //获得图像宽度
 	int h = m_Image.GetHeight();     //获得图像高度
@@ -1442,4 +1457,408 @@ void CImage_ProcessingView::On32843()
 			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = img_raw[i][j];
 
 	Invalidate(1); //强制调用ONDRAW函数
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//第四次作业
+//1. 图像RGB分量显示
+//显示原图像
+void CImage_ProcessingView::OnRgb32860()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+
+//显示R分量
+void CImage_ProcessingView::OnRgb32861()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[1][i][j] = 0;
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//显示G分量
+void CImage_ProcessingView::OnRgb32862()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[0][i][j] = m_Image.m_pBits[2][i][j] = 0;
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//显示B分量
+void CImage_ProcessingView::OnRgb32863()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();            //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";       //图像文件路径
+	m_Image.Load(file_path.c_str());                     //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+
+	for (int i = 0; i < h; ++i)                   //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+			m_Image.m_pBits[1][i][j] = m_Image.m_pBits[2][i][j] = 0;
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//2. HSI分量显示
+//原图像
+void CImage_ProcessingView::OnHsi32865()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//显示H分量
+void CImage_ProcessingView::OnHsi32866()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<vector<double>>> img_rgb, img_hsi; //定义vector存储图像的RGB值和HSI值
+	img_rgb.resize(3);
+	for (int i = 0; i < 3; ++i)
+		img_rgb[i].resize(h);
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < h; ++j)
+			img_rgb[i][j].resize(w);
+	img_hsi = img_rgb;                      
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img_rgb[0][i][j] = m_Image.m_pBits[2][i][j];
+			img_rgb[1][i][j] = m_Image.m_pBits[1][i][j];
+			img_rgb[2][i][j] = m_Image.m_pBits[0][i][j];
+		}
+
+	rgb2hsi(img_rgb, img_hsi);                  //RGB转换为HSI
+	normalize(img_hsi[0], 0, 255);              //H分量归一化到0-255
+
+	for (int i = 0; i < h; ++i)                 //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_hsi[0][i][j];
+			m_Image.m_pBits[1][i][j] = img_hsi[0][i][j];
+			m_Image.m_pBits[2][i][j] = img_hsi[0][i][j];
+		}
+		
+	Invalidate(1); //强制调用ONDRAW函数	
+}
+
+//显示S分量
+void CImage_ProcessingView::OnHsi32867()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<vector<double>>> img_rgb, img_hsi;   //定义vector存储图像的RGB值和HSI值
+	img_rgb.resize(3);
+	for (int i = 0; i < 3; ++i)
+		img_rgb[i].resize(h);
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < h; ++j)
+			img_rgb[i][j].resize(w);
+	img_hsi = img_rgb;                       
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img_rgb[0][i][j] = m_Image.m_pBits[2][i][j];
+			img_rgb[1][i][j] = m_Image.m_pBits[1][i][j];
+			img_rgb[2][i][j] = m_Image.m_pBits[0][i][j];
+		}
+
+	rgb2hsi(img_rgb, img_hsi);                  //RGB转换为HSI
+	normalize(img_hsi[1], 0, 255);              //S分量归一化到0-255
+
+	for (int i = 0; i < h; ++i)                 //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_hsi[1][i][j];
+			m_Image.m_pBits[1][i][j] = img_hsi[1][i][j];
+			m_Image.m_pBits[2][i][j] = img_hsi[1][i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数	
+}
+
+//显示I分量
+void CImage_ProcessingView::OnHsi32868()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/lena.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<vector<double>>> img_rgb, img_hsi;    //定义vector存储图像的RGB值和HSI值
+	img_rgb.resize(3);
+	for (int i = 0; i < 3; ++i)
+		img_rgb[i].resize(h);
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < h; ++j)
+			img_rgb[i][j].resize(w);
+	img_hsi = img_rgb;
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img_rgb[0][i][j] = m_Image.m_pBits[2][i][j];
+			img_rgb[1][i][j] = m_Image.m_pBits[1][i][j];
+			img_rgb[2][i][j] = m_Image.m_pBits[0][i][j];
+		}
+
+	rgb2hsi(img_rgb, img_hsi);                   //RGB转换为HSI
+	//normalize(img_hsi[2], 0, 255);             //I分量归一化到0-255
+
+	for (int i = 0; i < h; ++i)                  //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_rgb[2][i][j];
+			m_Image.m_pBits[1][i][j] = img_rgb[2][i][j];
+			m_Image.m_pBits[2][i][j] = img_rgb[2][i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数	
+}
+
+//3. 两种均衡化对比
+//原图像
+void CImage_ProcessingView::On32870()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+
+//RGB均衡化
+void CImage_ProcessingView::On32871()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<vector<int>>> img1, img2;          //定义vector存储图像的原始RGB值和均衡化后的RGB值
+	img1.resize(3);
+	for (int i = 0; i < 3; ++i)
+		img1[i].resize(h);
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < h; ++j)
+			img1[i][j].resize(w);
+	img2 = img1;
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img1[0][i][j] = m_Image.m_pBits[2][i][j];
+			img1[1][i][j] = m_Image.m_pBits[1][i][j];
+			img1[2][i][j] = m_Image.m_pBits[0][i][j];
+		}
+
+	for (int i = 0; i < 3; ++i)
+		img2[i] = histogram_equalization(img1[i]);   //对RGB分别进行均衡化
+
+	for (int i = 0; i < h; ++i)                      //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img2[2][i][j];
+			m_Image.m_pBits[1][i][j] = img2[1][i][j];
+			m_Image.m_pBits[2][i][j] = img2[0][i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数	
+
+}
+
+//HSI均衡化
+void CImage_ProcessingView::On32872()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<double>> img2(h, vector<double>(w, 0));
+	vector<vector<vector<double>>> img_rgb, img_hsi;         //定义vector存储图像的原始RGB值和HSI值
+	img_rgb.resize(3);
+	for (int i = 0; i < 3; ++i)
+		img_rgb[i].resize(h);
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < h; ++j)
+			img_rgb[i][j].resize(w);
+	img_hsi = img_rgb;
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img_rgb[0][i][j] = m_Image.m_pBits[2][i][j];
+			img_rgb[1][i][j] = m_Image.m_pBits[1][i][j];
+			img_rgb[2][i][j] = m_Image.m_pBits[0][i][j];
+		}
+
+	rgb2hsi(img_rgb, img_hsi);                   //RGB转换为HSI
+	img2 = histogram_equalization(img_hsi[2]);   //对I均衡化
+	img_hsi[2] = img2;           
+	hsi2rgb(img_hsi, img_rgb);                   //HSI转换为RGB
+
+	for (int i = 0; i < 3; ++i)                  //RGB的每个分量归一化到0-255
+		normalize(img_rgb[i], 0, 255);         
+
+	for (int i = 0; i < h; ++i)                  //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_rgb[2][i][j];
+			m_Image.m_pBits[1][i][j] = img_rgb[1][i][j];
+			m_Image.m_pBits[2][i][j] = img_rgb[0][i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数	
+
+}
+
+//彩色图像分割原图像
+void CImage_ProcessingView::On32874()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img2.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//标注参考色彩区域
+void CImage_ProcessingView::On32875()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img2.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	int m1 = 140, m2 = 220;        //区域的边界
+	int n1 = 450, n2 = 500;
+	for (int i = m1; i < m2; ++i)  //画边界框
+	{
+		for (int j = n1; j < n1 + 2; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = 0;
+			m_Image.m_pBits[1][i][j] = 255;
+			m_Image.m_pBits[2][i][j] = 0;
+		}
+		for (int j = n2; j < n2 + 2; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = 0;
+			m_Image.m_pBits[1][i][j] = 255;
+			m_Image.m_pBits[2][i][j] = 0;
+		}
+		
+	}
+	for (int j = n1; j < n2; ++j)
+	{
+		for (int i = m1; i < m1 + 2; ++i)
+		{
+			m_Image.m_pBits[0][i][j] = 0;
+			m_Image.m_pBits[1][i][j] = 255;
+			m_Image.m_pBits[2][i][j] = 0;
+		}
+		for (int i = m2; i< m2 + 2; ++i)
+		{
+			m_Image.m_pBits[0][i][j] = 0;
+			m_Image.m_pBits[1][i][j] = 255;
+			m_Image.m_pBits[2][i][j] = 0;
+		}
+	}
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//分割二值化后的结果
+void CImage_ProcessingView::On32876()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex4_imgs/img2.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<vector<double>>> img_rgb;          //定义vector存储图像的RGB值
+	img_rgb.resize(h);
+	for (int i = 0; i < h; ++i)
+		img_rgb[i].resize(w);
+	for (int i = 0; i < h; ++i)
+		for (int j = 0; j < w; ++j)
+			img_rgb[i][j].resize(3);
+	for (int i = 0; i < h; ++i)              //将图像幅值给vector数组
+		for (int j = 0; j < w; ++j)
+		{
+			img_rgb[i][j][0] = m_Image.m_pBits[2][i][j];
+			img_rgb[i][j][1] = m_Image.m_pBits[1][i][j];
+			img_rgb[i][j][2] = m_Image.m_pBits[0][i][j];
+		}
+	int m1 = 140, m2 = 220;          //参考色彩的边界
+	int n1 = 450, n2 = 500;
+	vector<vector<double>> img_sub;  //存储参考色彩框里面的像素值
+	img_sub.resize(3);
+	for (int k = 0; k < 3; ++k)
+		for (int i = m1; i <= m2; ++i)
+			for (int j = n1; j <= n2; ++j)
+				img_sub[k].push_back(img_rgb[i][j][k]);
+		
+	vector<double> rgb_std_dev(3, 0);
+	vector<double> rgb_mean(3, 0);
+	
+	for (int i = 0; i < 3; ++i)    //求均值和标准差
+	{
+		rgb_mean[i] = mean(img_sub[i]);
+		rgb_std_dev[i] = std_deviation(img_sub[i]);
+	}
+	
+	double T = 3;                 //定义判别阈值
+	for(auto& z:img_rgb)          //根据均值、方差和阈值二值化
+		for (auto& x : z)
+		{
+			vector<bool> a(3, 0);
+			for (int i = 0; i < 3; ++i)
+				a[i] = (x[i] >= (rgb_mean[i] - T * rgb_std_dev[i]) && x[i] <= (rgb_mean[i] + T * rgb_std_dev[i]));
+			if (a[0] && a[1] && a[2])
+			{
+				x[0] = x[1] = x[2] = 255;
+			}
+			else
+			{
+				x[0] = x[1] = x[2] = 0;
+			}
+		}
+	for (int i = 0; i < h; ++i)                 //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_rgb[i][j][2];
+			m_Image.m_pBits[1][i][j] = img_rgb[i][j][1];
+			m_Image.m_pBits[2][i][j] = img_rgb[i][j][0];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数
+	
 }
