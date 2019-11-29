@@ -15,6 +15,7 @@
 #include "yyj02.h"
 #include "yyj03.h"
 #include "yyj04.h"
+#include "yyj05.h"
 #include <string>
 #include <vector>
 
@@ -108,6 +109,9 @@ ON_COMMAND(ID_32872, &CImage_ProcessingView::On32872)
 ON_COMMAND(ID_32874, &CImage_ProcessingView::On32874)
 ON_COMMAND(ID_32875, &CImage_ProcessingView::On32875)
 ON_COMMAND(ID_32876, &CImage_ProcessingView::On32876)
+ON_COMMAND(ID_32877, &CImage_ProcessingView::On32877)
+ON_COMMAND(ID_32878, &CImage_ProcessingView::On32878)
+ON_COMMAND(ID_32879, &CImage_ProcessingView::On32879)
 END_MESSAGE_MAP()
 
 // CImage_ProcessingView 构造/析构
@@ -310,9 +314,11 @@ void CImage_ProcessingView::OnFileSaveAs()
 //                                                                                             //(图像 0:B 1:G 2:R)
 //                    *注 核心的函数代码储存在 yyj.h 和 yyj.c 文件中                           //
 /////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//第一次作业
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//												第一次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //1. 降低图像空间分辨率1/2
 void CImage_ProcessingView::On32792()
 {
@@ -693,8 +699,9 @@ void CImage_ProcessingView::On32805()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//第二次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//												第二次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //显示直方图
 vector<double> Pz(256, 0);
 void CImage_ProcessingView::On32814()
@@ -990,8 +997,9 @@ void CImage_ProcessingView::On32813()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//第三次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//												第三次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //显示傅里叶变换原图像
 void CImage_ProcessingView::On32825()   
 {
@@ -1459,8 +1467,9 @@ void CImage_ProcessingView::On32843()
 	Invalidate(1); //强制调用ONDRAW函数
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//第四次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//												第四次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //1. 图像RGB分量显示
 //显示原图像
 void CImage_ProcessingView::OnRgb32860()
@@ -1861,4 +1870,78 @@ void CImage_ProcessingView::On32876()
 
 	Invalidate(1); //强制调用ONDRAW函数
 	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//												第五次作业
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//显示用于分割的原图像
+void CImage_ProcessingView::On32877()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex5_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//基本阈值分割
+void CImage_ProcessingView::On32878()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex5_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<double>> img_raw;          //定义vector存储图像的RGB值
+	img_raw.resize(h);
+	for (int i = 0; i < h; ++i)
+		img_raw[i].resize(w);
+	for (int i = 0; i < h; ++i)      //转换为灰度图
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = (m_Image.m_pBits[2][i][j] + m_Image.m_pBits[1][i][j] + m_Image.m_pBits[0][i][j]) / 3;
+
+	normalize(img_raw, 0, 1);
+	int delta = 0.01;
+	base_segmentation(img_raw, delta);     //采用基本阈值分割
+	normalize(img_raw, 0, 255);
+
+	for (int i = 0; i < h; ++i)                 //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_raw[i][j];
+			m_Image.m_pBits[1][i][j] = img_raw[i][j];
+			m_Image.m_pBits[2][i][j] = img_raw[i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数
+}
+
+//最大方差分割
+void CImage_ProcessingView::On32879()
+{
+	if (!m_Image.IsNull()) m_Image.Destroy();        //判断是否已经有图片，有的话进行清除
+	std::string file_path = "./ex5_imgs/img1.jpg";   //图像文件路径
+	m_Image.Load(file_path.c_str());                 //读取图像
+	int w = m_Image.GetWidth();      //获得图像宽度
+	int h = m_Image.GetHeight();     //获得图像高度
+	vector<vector<int>> img_raw;          //定义vector存储图像的RGB值
+	img_raw.resize(h);
+	for (int i = 0; i < h; ++i)
+		img_raw[i].resize(w);
+	for (int i = 0; i < h; ++i)      //转换为灰度图
+		for (int j = 0; j < w; ++j)
+			img_raw[i][j] = (m_Image.m_pBits[2][i][j] + m_Image.m_pBits[1][i][j] + m_Image.m_pBits[0][i][j]) / 3;
+
+	otsu_segmentation(img_raw);            //最大方差分割
+
+	for (int i = 0; i < h; ++i)                 //把处理的结果赋值以便显示
+		for (int j = 0; j < w; ++j)
+		{
+			m_Image.m_pBits[0][i][j] = img_raw[i][j];
+			m_Image.m_pBits[1][i][j] = img_raw[i][j];
+			m_Image.m_pBits[2][i][j] = img_raw[i][j];
+		}
+
+	Invalidate(1); //强制调用ONDRAW函数
 }

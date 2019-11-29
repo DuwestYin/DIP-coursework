@@ -300,6 +300,12 @@ BEGIN
             MENUITEM "分割二值化结果",                     ID_32876
         END
     END
+    POPUP "第五次作业"
+    BEGIN
+        MENUITEM "原图像",                         ID_32877
+        MENUITEM "基本全局阈值分割",                    ID_32878
+        MENUITEM "最大方差分割",                      ID_32879
+    END
 END
 
 IDR_POPUP_EDIT MENU
